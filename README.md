@@ -16,3 +16,7 @@ A demonstration of this project is available here:
 http://fhirtest.uhn.ca/
 
 This project is Open Source, licensed under the Apache Software License 2.0.
+
+## SEARCH SPIDER
+
+Search Spider improvements and adaptations by Alfonso Tienda
