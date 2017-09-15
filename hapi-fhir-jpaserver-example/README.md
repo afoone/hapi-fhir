@@ -41,3 +41,11 @@ Use this command to start the container:
   `docker run -d --name hapi-fhir-jpaserver-example -p 8080:8080 hapi-fhir/hapi-fhir-jpaserver-example`
 
 Note: with this command data is persisted across container restarts, but not after removal of the container. Use a docker volume mapping on /var/lib/jetty/target to achieve this.
+
+## Modificaciones para conexión con MYSQL
+El sistema conecta con MySQL 5.5 en la siguiente dirección:
+http://mysql:3306/fhir
+Usuario fhir
+Password fhir
+
+
