@@ -48,4 +48,5 @@ http://mysql:3306/fhir
 Usuario fhir
 Password fhir
 
-
+## Cargas de terminologías
+Incluido montaje de /var/terms para la carga de terminologías, ya que no se hace un upload, sino ha de estar en su sistema de ficheros local (local al docker)
