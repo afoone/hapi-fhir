@@ -43,12 +43,12 @@ public class FhirTesterConfig {
 				.withId("home")
 				.withFhirVersion(FhirVersionEnum.DSTU3)
 				.withBaseUrl("${serverBase}/baseDstu3")
-				.withName("Local Tester")
-			.addServer()
-				.withId("hapi")
-				.withFhirVersion(FhirVersionEnum.DSTU3)
-				.withBaseUrl("http://fhirtest.uhn.ca/baseDstu3")
-				.withName("Public HAPI Test Server");
+				.withName("iProcuratio Server");
+//			.addServer()
+//				.withId("hapi")
+//				.withFhirVersion(FhirVersionEnum.DSTU3)
+//				.withBaseUrl("http://fhirtest.uhn.ca/baseDstu3")
+//				.withName("Public HAPI Test Server");
 		return retVal;
 	}
 

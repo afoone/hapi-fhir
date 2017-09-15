@@ -87,6 +87,7 @@ public class FhirServerConfig extends BaseJavaConfigDstu3 {
 	/**
 	 * Propiedades de hibernate
 	 * atienda: modificado para conectar con Mysql 5.5
+	 * @todo ¿debemos persistir target/lucenefiles?
 	 * @return
 	 */
 	private Properties jpaProperties() {

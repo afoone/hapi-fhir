@@ -1,6 +1,16 @@
 
 package ca.uhn.fhir.jpa.demo;
 
+import java.util.Collection;
+import java.util.List;
+
+import javax.servlet.ServletException;
+
+import org.hl7.fhir.dstu3.model.Bundle;
+import org.hl7.fhir.dstu3.model.Meta;
+import org.springframework.web.context.ContextLoaderListener;
+import org.springframework.web.context.WebApplicationContext;
+
 import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.context.FhirVersionEnum;
 import ca.uhn.fhir.jpa.dao.DaoConfig;
@@ -11,6 +21,7 @@ import ca.uhn.fhir.jpa.provider.JpaSystemProviderDstu1;
 import ca.uhn.fhir.jpa.provider.JpaSystemProviderDstu2;
 import ca.uhn.fhir.jpa.provider.dstu3.JpaConformanceProviderDstu3;
 import ca.uhn.fhir.jpa.provider.dstu3.JpaSystemProviderDstu3;
+import ca.uhn.fhir.jpa.provider.dstu3.TerminologyUploaderProviderDstu3;
 import ca.uhn.fhir.jpa.search.DatabaseBackedPagingProvider;
 import ca.uhn.fhir.model.api.IResource;
 import ca.uhn.fhir.model.dstu2.composite.MetaDt;
@@ -20,15 +31,12 @@ import ca.uhn.fhir.rest.server.EncodingEnum;
 import ca.uhn.fhir.rest.server.IResourceProvider;
 import ca.uhn.fhir.rest.server.RestfulServer;
 import ca.uhn.fhir.rest.server.interceptor.IServerInterceptor;
-import org.hl7.fhir.dstu3.model.Bundle;
-import org.hl7.fhir.dstu3.model.Meta;
-import org.springframework.web.context.ContextLoaderListener;
-import org.springframework.web.context.WebApplicationContext;
 
-import javax.servlet.ServletException;
-import java.util.Collection;
-import java.util.List;
-
+/**
+ * 
+ * @author afoone
+ * atienda: añado el registro 
+ */
 public class JpaServerDemo extends RestfulServer {
 
 	private static final long serialVersionUID = 1L;
@@ -146,11 +154,12 @@ public class JpaServerDemo extends RestfulServer {
 			this.registerInterceptor(interceptor);
 		}
 
-		/*
+		/**
 		 * If you are hosting this server at a specific DNS name, the server will try to 
 		 * figure out the FHIR base URL based on what the web container tells it, but
 		 * this doesn't always work. If you are setting links in your search bundles that
 		 * just refer to "localhost", you might want to use a server address strategy:
+		 * @todo: tenerlo en cuenta
 		 */
 		//setServerAddressStrategy(new HardcodedServerAddressStrategy("http://mydomain.com/fhir/baseDstu2"));
 		
@@ -160,10 +169,11 @@ public class JpaServerDemo extends RestfulServer {
 		 * does not have any security attached (any anonymous user may use it by default)
 		 * so it is a potential security vulnerability. Consider using an AuthorizationInterceptor
 		 * with this feature.
+		 * atienda: añadimos esta funcionalidad
 		 */
-		//if (fhirVersion == FhirVersionEnum.DSTU3) {
-		//	 registerProvider(myAppCtx.getBean(TerminologyUploaderProviderDstu3.class));
-		//}
+		if (fhirVersion == FhirVersionEnum.DSTU3) {
+			 registerProvider(myAppCtx.getBean(TerminologyUploaderProviderDstu3.class));
+		}
 	}
 
 }
