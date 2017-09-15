@@ -1,5 +1,6 @@
 package ca.uhn.fhir.jpa.demo;
 
+import java.sql.SQLException;
 import java.util.Properties;
 
 import javax.persistence.EntityManagerFactory;
@@ -24,6 +25,7 @@ import ca.uhn.fhir.rest.server.interceptor.ResponseHighlighterInterceptor;
 
 /**
  * This is the primary configuration file for the example server
+ * atienda: modificaciones para conectar con mysql 5.5
  */
 @Configuration
 @EnableTransactionManagement()
@@ -47,14 +49,27 @@ public class FhirServerConfig extends BaseJavaConfigDstu3 {
 	 * directory called "jpaserver_derby_files".
 	 * 
 	 * A URL to a remote database could also be placed here, along with login credentials and other properties supported by BasicDataSource.
+	 * atienda: modificado para conectar con mysql
 	 */
 	@Bean(destroyMethod = "close")
 	public DataSource dataSource() {
 		BasicDataSource retVal = new BasicDataSource();
-		retVal.setDriver(new org.apache.derby.jdbc.EmbeddedDriver());
-		retVal.setUrl("jdbc:derby:directory:target/jpaserver_derby_files;create=true");
-		retVal.setUsername("");
-		retVal.setPassword("");
+		
+		try {
+			retVal.setDriver(new com.mysql.jdbc.Driver());
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		retVal.setUrl("jdbc:mysql://mysql:3306/fhir");
+		
+		retVal.setUsername("fhir");
+		retVal.setPassword("fhir");
+		
+//		retVal.setDriver(new org.apache.derby.jdbc.EmbeddedDriver());
+//		retVal.setUrl("jdbc:derby:directory:target/jpaserver_derby_files;create=true");
+//		retVal.setUsername("");
+//		retVal.setPassword("");
 		return retVal;
 	}
 
@@ -69,9 +84,15 @@ public class FhirServerConfig extends BaseJavaConfigDstu3 {
 		return retVal;
 	}
 
+	/**
+	 * Propiedades de hibernate
+	 * atienda: modificado para conectar con Mysql 5.5
+	 * @return
+	 */
 	private Properties jpaProperties() {
 		Properties extraProperties = new Properties();
-		extraProperties.put("hibernate.dialect", org.hibernate.dialect.DerbyTenSevenDialect.class.getName());
+		//extraProperties.put("hibernate.dialect", org.hibernate.dialect.DerbyTenSevenDialect.class.getName());
+		extraProperties.put("hibernate.dialect", org.hibernate.dialect.MySQL55Dialect.class.getName());
 		extraProperties.put("hibernate.format_sql", "true");
 		extraProperties.put("hibernate.show_sql", "false");
 		extraProperties.put("hibernate.hbm2ddl.auto", "update");

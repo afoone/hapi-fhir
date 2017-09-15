@@ -1,5 +1,7 @@
 #!/bin/sh
 
+
 mvn package && \
-  docker build -t hapi-fhir/hapi-fhir-jpaserver-example .
+cp target/*.war docker/ && \
+  docker build -t afoone/spider-hapi-fhir docker/
 

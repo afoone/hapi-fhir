@@ -1,0 +1,20 @@
+version: "3.0"
+services: 
+  mysql:
+    image: mysql:5.5
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: fhir
+      MYSQL_USER: fhir
+      MYSQL_PASSWORD: fhir
+    volumes:
+      - "./target/mysql:/var/lib/mysql"
+  server:
+    image: afoone/spider-hapi-fhir
+    links:
+      - mysql
+    ports:
+      - "8080:8080"
+

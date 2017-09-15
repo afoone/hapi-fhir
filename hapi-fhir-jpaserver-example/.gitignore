@@ -1,3 +1,5 @@
+/WebContent
+/mysql
 /target
 /jpaserver_derby_files
 *.log
